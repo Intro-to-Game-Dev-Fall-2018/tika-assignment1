@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/OpeningScene.unity
+    guid: 28fe9db084a660348a1d625211e4b84e
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 85186174bf380054693b322b463d23b6
+  - enabled: 1
+    path: Assets/Scenes/Duck1Victory.unity
+    guid: be28797fc55358447aae3c6ec97cbcdb
+  - enabled: 1
+    path: Assets/Scenes/Duck2Victory.unity
+    guid: d2e1f3a12b2c18b4dba747c1170256eb
+  - enabled: 1
+    path: Assets/Scenes/TieScene.unity
+    guid: 5d3fdb9c99f004a4d8e839a2a441376d
+  m_configObjects: {}
