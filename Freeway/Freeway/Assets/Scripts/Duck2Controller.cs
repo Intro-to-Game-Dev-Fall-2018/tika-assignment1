@@ -12,6 +12,8 @@ public class Duck2Controller : MonoBehaviour
 	private int score;
 	public Text scoreText;
 
+	public GameObject DuckWall;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -39,9 +41,19 @@ public class Duck2Controller : MonoBehaviour
 	{
 		if (collisionInfo.gameObject.CompareTag("upper"))
 		{
-			transform.position = new Vector2(7.624f, -4.274f);
+			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
 			score++;
 			scoreText.text = score.ToString();
+		}
+		
+		if (collisionInfo.gameObject.CompareTag("leftcar"))
+		{
+			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
+		}
+		
+		if (collisionInfo.gameObject.CompareTag("rightcar"))
+		{
+			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
 		}
 	}
 

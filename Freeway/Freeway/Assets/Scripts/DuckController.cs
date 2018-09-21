@@ -17,6 +17,7 @@ public class DuckController : MonoBehaviour
 	public Text timeText;
 
 	public GameObject OtherPlayer;
+	public GameObject DuckWall;
 	
 	// Use this for initialization
 	void Start()
@@ -67,10 +68,20 @@ public class DuckController : MonoBehaviour
 	{
 		if (collisionInfo.gameObject.CompareTag("upper"))
 		{
-			transform.position = new Vector2(-6.17f, -4.274f);
+			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
 			score++;
 			scoreText.text = score.ToString();
 
+		}
+
+		if (collisionInfo.gameObject.CompareTag("leftcar"))
+		{
+			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
+		}
+		
+		if (collisionInfo.gameObject.CompareTag("rightcar"))
+		{
+			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
 		}
 	}
 	

@@ -9,6 +9,9 @@ TagManager:
   - rightwall
   - leftwall1
   - leftwall
+  - car
+  - leftcar
+  - rightcar
   layers:
   - Default
   - TransparentFX
