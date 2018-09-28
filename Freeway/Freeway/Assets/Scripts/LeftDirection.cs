@@ -17,7 +17,7 @@ public class LeftDirection : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed,GetComponent<Rigidbody2D>().velocity.y);
+		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
 		
 	}
 

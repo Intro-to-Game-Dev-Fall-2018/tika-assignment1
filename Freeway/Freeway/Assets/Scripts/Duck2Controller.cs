@@ -11,6 +11,10 @@ public class Duck2Controller : MonoBehaviour
 
 	private int score;
 	public Text scoreText;
+	
+	public float delay;
+
+	private bool isMovable;
 
 	public GameObject DuckWall;
 
@@ -19,6 +23,8 @@ public class Duck2Controller : MonoBehaviour
 	{
 		myRigidBody = GetComponent<Rigidbody2D>();
 		score = 0;
+		isMovable = true;
+		delay = 0.5f;
 	}
 
 	// Update is called once per frame
@@ -26,14 +32,22 @@ public class Duck2Controller : MonoBehaviour
 	{
 		myRigidBody.velocity = new Vector2(0, 0);
 
-		if (Input.GetKey(KeyCode.UpArrow))
+		if (isMovable == true)
 		{
-			myRigidBody.velocity += new Vector2(0, moveSpeed);
+			if (Input.GetKey(KeyCode.UpArrow))
+			{
+				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, moveSpeed);
+			}
+
+			if (Input.GetKey(KeyCode.DownArrow))
+			{
+				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -moveSpeed);
+			}
 		}
 
-		if (Input.GetKey(KeyCode.DownArrow))
+		else
 		{
-			myRigidBody.velocity -= new Vector2(0, moveSpeed);
+			ExecuteDelay();
 		}
 	}
 	
@@ -42,6 +56,7 @@ public class Duck2Controller : MonoBehaviour
 		if (collisionInfo.gameObject.CompareTag("upper"))
 		{
 			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
+			isMovable = false;
 			score++;
 			scoreText.text = score.ToString();
 		}
@@ -49,17 +64,30 @@ public class Duck2Controller : MonoBehaviour
 		if (collisionInfo.gameObject.CompareTag("leftcar"))
 		{
 			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
+			isMovable = false;
 		}
 		
 		if (collisionInfo.gameObject.CompareTag("rightcar"))
 		{
 			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
+			isMovable = false;
 		}
 	}
 
 	public int getScore()
 	{
 		return score;
+	}
+	
+	private void ExecuteDelay()
+	{
+		delay -= Time.deltaTime;
+
+		if (delay <= 0)
+		{
+			isMovable = true;
+			delay = 0.5f;
+		}
 	}
 	
 }

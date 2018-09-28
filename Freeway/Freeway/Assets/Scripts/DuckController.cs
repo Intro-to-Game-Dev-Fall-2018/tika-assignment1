@@ -12,6 +12,9 @@ public class DuckController : MonoBehaviour
 
 	private int score;
 	private float seconds;
+	public float delay;
+
+	private bool isMovable;
 
 	public Text scoreText;
 	public Text timeText;
@@ -25,6 +28,8 @@ public class DuckController : MonoBehaviour
 		myRigidBody = GetComponent<Rigidbody2D>();
 		score = 0;
 		seconds = 120f;
+		isMovable = true;
+		delay = 0.5f;
 	}
 
 	// Update is called once per frame
@@ -32,15 +37,24 @@ public class DuckController : MonoBehaviour
 	{
 		myRigidBody.velocity = new Vector2(0, 0);
 
-		if (Input.GetKey(KeyCode.W))
+		if (isMovable == true)
 		{
-			myRigidBody.velocity += new Vector2(0, moveSpeed);
+			if (Input.GetKey(KeyCode.W))
+			{
+				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, moveSpeed);
+			}
+
+			if (Input.GetKey(KeyCode.S))
+			{
+				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -moveSpeed);
+			}
 		}
 
-		if (Input.GetKey(KeyCode.S))
+		else
 		{
-			myRigidBody.velocity -= new Vector2(0, moveSpeed);
+			ExecuteDelay();
 		}
+
 
 		seconds -= Time.deltaTime;
 		timeText.text = "" + (int) seconds;
@@ -69,21 +83,35 @@ public class DuckController : MonoBehaviour
 		if (collisionInfo.gameObject.CompareTag("upper"))
 		{
 			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
+			isMovable = false;
 			score++;
 			scoreText.text = score.ToString();
-
 		}
 
 		if (collisionInfo.gameObject.CompareTag("leftcar"))
 		{
-			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
+			transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
+			isMovable = false;
 		}
 		
 		if (collisionInfo.gameObject.CompareTag("rightcar"))
 		{
-			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
+			transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
+			isMovable = false;
 		}
 	}
+
+	private void ExecuteDelay()
+	{
+		delay -= Time.deltaTime;
+
+		if (delay <= 0)
+		{
+			isMovable = true;
+			delay = 0.5f;
+		}
+	}
+
 	
 }
 	
