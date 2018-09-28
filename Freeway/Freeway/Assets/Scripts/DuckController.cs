@@ -9,6 +9,7 @@ public class DuckController : MonoBehaviour
 {
 	public int moveSpeed = 5;
 	Rigidbody2D myRigidBody;
+    Animator myAnimator;
 
 	private int score;
 	private float seconds;
@@ -26,6 +27,8 @@ public class DuckController : MonoBehaviour
 	void Start()
 	{
 		myRigidBody = GetComponent<Rigidbody2D>();
+		myAnimator = GetComponent<Animator>();
+		
 		score = 0;
 		seconds = 120f;
 		isMovable = true;
@@ -35,17 +38,22 @@ public class DuckController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		seconds -= Time.deltaTime;
+		timeText.text = "" + (int) seconds;
+		
 		myRigidBody.velocity = new Vector2(0, 0);
 
 		if (isMovable == true)
 		{
 			if (Input.GetKey(KeyCode.W))
 			{
+				myAnimator.Play("Dude-Back");
 				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, moveSpeed);
 			}
 
 			if (Input.GetKey(KeyCode.S))
 			{
+				myAnimator.Play("Duck-Front");
 				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -moveSpeed);
 			}
 		}
@@ -53,11 +61,7 @@ public class DuckController : MonoBehaviour
 		else
 		{
 			ExecuteDelay();
-		}
-
-
-		seconds -= Time.deltaTime;
-		timeText.text = "" + (int) seconds;
+		}	
 
 		if (seconds <= 0)
 		{

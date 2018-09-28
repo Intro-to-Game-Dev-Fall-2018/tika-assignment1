@@ -8,6 +8,7 @@ public class Duck2Controller : MonoBehaviour
 {
 	public int moveSpeed = 5;
 	Rigidbody2D myRigidBody;
+	Animator myAnimator;
 
 	private int score;
 	public Text scoreText;
@@ -22,6 +23,8 @@ public class Duck2Controller : MonoBehaviour
 	void Start()
 	{
 		myRigidBody = GetComponent<Rigidbody2D>();
+		myAnimator = GetComponent<Animator>();
+		
 		score = 0;
 		isMovable = true;
 		delay = 0.5f;
@@ -36,11 +39,13 @@ public class Duck2Controller : MonoBehaviour
 		{
 			if (Input.GetKey(KeyCode.UpArrow))
 			{
+				myAnimator.Play("Girl-Back");
 				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, moveSpeed);
 			}
 
 			if (Input.GetKey(KeyCode.DownArrow))
 			{
+				myAnimator.Play("Girl-Front");
 				myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, -moveSpeed);
 			}
 		}
