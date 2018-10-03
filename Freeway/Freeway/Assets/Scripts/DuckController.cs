@@ -23,11 +23,22 @@ public class DuckController : MonoBehaviour
 	public GameObject OtherPlayer;
 	public GameObject DuckWall;
 	
+	private AudioSource audioSource;
+	public AudioClip[] list;
+	
 	// Use this for initialization
 	void Start()
-	{
+	{	
+		list =  new AudioClip[]{(AudioClip)Resources.Load("Sounds/cash"),
+			(AudioClip)Resources.Load("Sounds/scream1"),
+			(AudioClip)Resources.Load("Sounds/scream2"), 
+			(AudioClip)Resources.Load("Sounds/scream3"),
+			(AudioClip)Resources.Load("Sounds/scream4"), 
+			(AudioClip)Resources.Load("Sounds/scream5")};
+		
 		myRigidBody = GetComponent<Rigidbody2D>();
 		myAnimator = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
 		
 		score = 0;
 		seconds = 120f;
@@ -86,6 +97,9 @@ public class DuckController : MonoBehaviour
 	{
 		if (collisionInfo.gameObject.CompareTag("upper"))
 		{
+			audioSource.clip = list[0];
+			audioSource.Play();
+			
 			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
 			isMovable = false;
 			score++;
@@ -94,12 +108,14 @@ public class DuckController : MonoBehaviour
 
 		if (collisionInfo.gameObject.CompareTag("leftcar"))
 		{
+			setAudio();
 			transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
 			isMovable = false;
 		}
 		
 		if (collisionInfo.gameObject.CompareTag("rightcar"))
 		{
+			setAudio();
 			transform.position = new Vector2(transform.position.x, transform.position.y - 0.2f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
 			isMovable = false;
 		}
@@ -116,7 +132,13 @@ public class DuckController : MonoBehaviour
 		}
 	}
 
-	
+	private void setAudio()
+	{
+		int randomInt = Random.Range(1, 6);
+		audioSource.clip = list[randomInt];
+		audioSource.Play();
+	}
+
 }
 	
 	
