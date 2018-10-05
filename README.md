@@ -1,6 +1,9 @@
 # Assignment 1: Action Game Clone
 
-## [Here's what I have done so far (as of September 28th)](https://ak5352.itch.io/freeway-clone-draft-3)
+## [Here's what I have done so far (as of October 5th)](https://ak5352.itch.io/freeway-student-edition)
+I created animated sprites, improved the collision system, and added delays after the player sprites collide with walls and cars. 
+
+## [Here's what I had done by September 28th](https://ak5352.itch.io/freeway-clone-draft-3)
 I created animated sprites, improved the collision system, and added delays after the player sprites collide with walls and cars. 
 
 ## [Here's what I had done by September 21st](https://ak5352.itch.io/freeway-clone-draft-2)
