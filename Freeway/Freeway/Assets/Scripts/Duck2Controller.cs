@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class Duck2Controller : MonoBehaviour
 {
@@ -38,13 +41,23 @@ public class Duck2Controller : MonoBehaviour
 		
 		score = 0;
 		isMovable = true;
-		delay = 0.5f;
+		delay = 0.75f;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		myRigidBody.velocity = new Vector2(0, 0);
+		
+		if (Input.GetKey(KeyCode.Alpha1)) 
+		{
+			Application.Quit();
+		}
+		
+		if (Input.GetKey(KeyCode.Alpha2)) 
+		{
+			SceneManager.LoadScene("GameScene");
+		}
 
 		if (isMovable == true)
 		{
@@ -75,28 +88,31 @@ public class Duck2Controller : MonoBehaviour
 			audioSource.Play();
 			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
 			isMovable = false;
-			score++;
 			scoreText.text = score.ToString();
 		}
 		
 		if (collisionInfo.gameObject.CompareTag("leftcar"))
 		{
 			setAudio();
-			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
+			//transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
+			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
+			score += (int) (100 * collisionInfo.gameObject.GetComponent<LeftDirection>().moveSpeed);
 			isMovable = false;
 		}
 		
 		if (collisionInfo.gameObject.CompareTag("rightcar"))
 		{
 			setAudio();
-			transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
+			//transform.position = new Vector2(transform.position.x, transform.position.y - 0.1f * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
+			transform.position = new Vector2(DuckWall.gameObject.transform.position.x, DuckWall.gameObject.transform.position.y);
+			score += (int) (100 * collisionInfo.gameObject.GetComponent<RightDirection>().moveSpeed);
 			isMovable = false;
 		}
 	}
 
 	public int getScore()
 	{
-		return score;
+		return Int32.Parse(scoreText.text);
 	}
 	
 	private void ExecuteDelay()
@@ -106,7 +122,7 @@ public class Duck2Controller : MonoBehaviour
 		if (delay <= 0)
 		{
 			isMovable = true;
-			delay = 0.5f;
+			delay = 0.75f;
 		}
 	}
 	
